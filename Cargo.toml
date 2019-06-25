@@ -1,5 +1,5 @@
 [package]
-name = "not-pushed-repositories"
+name = "not_pushed_repositories"
 version = "0.1.0"
 authors = ["Marcelo Henrique Neppel <marcelo.neppel@gmail.com>"]
 edition = "2018"
