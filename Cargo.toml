@@ -1,5 +1,6 @@
 [package]
 name = "npr"
+description = "Tool to check for not pushed repositories."
 version = "0.1.0"
 authors = ["Marcelo Henrique Neppel <marcelo.neppel@gmail.com>"]
 edition = "2018"
