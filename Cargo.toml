@@ -3,6 +3,7 @@ name = "npr"
 description = "Tool to check for not pushed repositories."
 version = "0.1.0"
 authors = ["Marcelo Henrique Neppel <marcelo.neppel@gmail.com>"]
+license = "BSD-3-Clause"
 edition = "2018"
 
 [dependencies]
