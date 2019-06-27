@@ -56,7 +56,7 @@ fn run(args: &Args) -> Result<(), Error> {
                     
                     let statuses = repo.statuses(Some(&mut opts))?;
                     for _entry in statuses.iter().filter(|e| e.status() != git2::Status::CURRENT) {
-                        println!("{:?} it's a not pushed repository", sub_path);
+                        println!("{:?} is a not pushed repository", sub_path);
                         // TODO: add option to print not pushed items.
                         break;
                     }
