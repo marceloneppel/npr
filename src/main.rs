@@ -10,6 +10,7 @@ struct Args {
 }
 
 // TODO: add tests.
+// TODO: remove dependency from OpenSSL.
 fn main() {
     // TODO: fix invalid arguments message.
     const USAGE: &str = "
