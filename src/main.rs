@@ -1,7 +1,7 @@
 use docopt::Docopt;
 use git2::{Error, Repository, StatusOptions};
 use serde_derive::Deserialize;
-use std::fs::metadata;
+use std::fs::{metadata,read_dir};
 
 #[derive(Debug)]
 #[derive(Deserialize)]
@@ -36,21 +36,33 @@ fn run(args: &Args) -> Result<(), Error> {
             continue;
         }
 
-        // TODO: change to be a parent path.
-        let repo = Repository::open(&path)?;
-        if repo.is_bare() {
-            return Err(Error::from_str("cannot report status on bare repository"));
-        }
+        let sub_paths = read_dir(path).unwrap();
 
-        let mut opts = StatusOptions::new();
-        opts.include_untracked(true).recurse_untracked_dirs(true);
-        
-        let statuses = repo.statuses(Some(&mut opts))?;
-        for _entry in statuses.iter().filter(|e| e.status() != git2::Status::CURRENT) {
-            println!("{} it's a not pushed repository", path);
-            // TODO: add option to print not pushed items.
-            break;
-        }
+        for sub_path in sub_paths {
+            let sub_path = sub_path.unwrap().path();
+
+            let md = metadata(&sub_path).unwrap();
+            if md.is_dir() {
+                let repo = Repository::open(&sub_path);
+                if repo.is_ok() {
+                    let repo = repo.unwrap();
+                    
+                    if repo.is_bare() {
+                        return Err(Error::from_str("cannot report status on bare repository"));
+                    }
+
+                    let mut opts = StatusOptions::new();
+                    opts.include_untracked(true).recurse_untracked_dirs(true);
+                    
+                    let statuses = repo.statuses(Some(&mut opts))?;
+                    for _entry in statuses.iter().filter(|e| e.status() != git2::Status::CURRENT) {
+                        println!("{:?} it's a not pushed repository", sub_path);
+                        // TODO: add option to print not pushed items.
+                        break;
+                    }
+                }
+            }
+        }        
     }
     return Ok(());
 }
