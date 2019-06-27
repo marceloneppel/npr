@@ -9,7 +9,9 @@ struct Args {
     arg_path: Vec<String>,
 }
 
+// TODO: add tests.
 fn main() {
+    // TODO: fix invalid arguments message.
     const USAGE: &str = "
     usage: npr [options] [<path>]
     Options:
